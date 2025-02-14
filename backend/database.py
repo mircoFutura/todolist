@@ -1,0 +1,16 @@
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+cred = credentials.Certificate('./progetto01/ServiceAccountKey.json')
+app = firebase_admin.initialize_app(cred)
+db = firestore.client(app)
+
+def add_prodotto(nome:str):
+    db.collection("prodotti").document(nome).set({"nome":nome})
+
+def get_prodotti():
+    prodotti = []
+    for prodotto in db.collection("prodotti").stream():
+        prodotti += [ prodotto.to_dict() ]
+        # prodotti.append( prodotto.to_dict() )
+    return prodotti
