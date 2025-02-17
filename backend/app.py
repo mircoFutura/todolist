@@ -2,15 +2,18 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
+from models import *
 from database import *
+
 
 app = FastAPI()
 
 
-@app.get("/prodotto")
-def prodotto(nome:str):
-    add_prodotto(nome)
+@app.post("/prodotto")
+def prodotto(prodotto:Item):
+    add_prodotto(prodotto)
     return True
+
 
 @app.get("/prodotti")
 def prodotti():
